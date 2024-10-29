@@ -1,6 +1,8 @@
 package main
 
 import (
+	"devoniq/goDo/db"
+	"devoniq/goDo/model"
 	"fmt"
 	"io"
 	"net/http"
@@ -10,6 +12,8 @@ import (
 )
 
 func main() {
+	database := db.Init()
+	database.Create(&model.Todo{ID: 1, Name: "test", Description: "testDescription"})
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/", getHello)
