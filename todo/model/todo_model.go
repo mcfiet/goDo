@@ -1,7 +1,7 @@
 package model
 
 type Todo struct {
-	ID          int `gorm:"primaryKey"`
-	Name        string
-	Description string
+	ID          int    `json:"id" gorm:"unique;primaryKey;autoIncrement"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }

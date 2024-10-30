@@ -12,6 +12,7 @@ func TodoRouter() http.Handler {
 	r.Get("/", controller.GetHello)
 	r.Route("/todos", func(r chi.Router) {
 		r.Get("/", controller.GetAllTodos)
+		r.Post("/", controller.CreateTodo)
 	})
 	return r
 }
