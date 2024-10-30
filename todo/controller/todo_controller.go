@@ -3,9 +3,11 @@ package controller
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+
+	"github.com/go-chi/chi/v5"
 	"github.com/mcfiet/goDo/todo/model"
 	"github.com/mcfiet/goDo/todo/service"
-	"net/http"
 )
 
 func GetHello(w http.ResponseWriter, r *http.Request) {
@@ -36,4 +38,8 @@ func CreateTodo(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 	w.Header().Set("Content-Type", "application/json")
+}
+
+func GetTodoById(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(chi.URLParam(r, "id"))
 }
