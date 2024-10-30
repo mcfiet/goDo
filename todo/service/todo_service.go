@@ -1,8 +1,8 @@
 package service
 
 import (
-	"devoniq/goDo/todo/model"
-	todoRepository "devoniq/goDo/todo/repository"
+	"github.com/mcfiet/goDo/todo/model"
+	todoRepository "github.com/mcfiet/goDo/todo/repository"
 )
 
 func GetAllTodos() ([]model.Todo, error) {

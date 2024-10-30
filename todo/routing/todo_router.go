@@ -1,7 +1,7 @@
 package router
 
 import (
-	"devoniq/goDo/todo/controller"
+	"github.com/mcfiet/goDo/todo/controller"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"

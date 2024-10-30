@@ -1,4 +1,4 @@
-module devoniq/goDo
+module github.com/mcfiet/goDo
 
 go 1.23.1
 

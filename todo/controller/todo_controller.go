@@ -1,10 +1,10 @@
 package controller
 
 import (
-	"devoniq/goDo/todo/model"
-	"devoniq/goDo/todo/service"
 	"encoding/json"
 	"fmt"
+	"github.com/mcfiet/goDo/todo/model"
+	"github.com/mcfiet/goDo/todo/service"
 	"net/http"
 )
 

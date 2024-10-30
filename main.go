@@ -1,8 +1,8 @@
 package main
 
 import (
-	"devoniq/goDo/db"
-	router "devoniq/goDo/todo/routing"
+	"github.com/mcfiet/goDo/db"
+	router "github.com/mcfiet/goDo/todo/routing"
 	"net/http"
 )
 
