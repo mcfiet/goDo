@@ -12,3 +12,7 @@ func GetAllTodos() ([]model.Todo, error) {
 func CreateTodo(todo *model.Todo) error {
 	return todoRepository.CreateTodo(todo)
 }
+
+func GetTodoById(id string) (model.Todo, error) {
+	return todoRepository.GetTodoById(id)
+}

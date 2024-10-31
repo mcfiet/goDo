@@ -18,7 +18,6 @@ func GetHello(w http.ResponseWriter, r *http.Request) {
 
 func GetAllTodos(w http.ResponseWriter, r *http.Request) {
 	entries, err := service.GetAllTodos()
-
 	if err != nil {
 		http.Error(w, "Fehler beim Holen der Daten", http.StatusInternalServerError)
 	}
@@ -41,5 +40,18 @@ func CreateTodo(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetTodoById(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(chi.URLParam(r, "id"))
+	id := chi.URLParam(r, "id")
+	fmt.Println(id)
+
+	entry, err := service.GetTodoById(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	err = json.NewEncoder(w).Encode(&entry)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
 }

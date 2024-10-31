@@ -20,3 +20,12 @@ func CreateTodo(todo *model.Todo) error {
 
 	return result.Error
 }
+
+func GetTodoById(id string) (model.Todo, error) {
+	database := db.GetDB()
+	var todo model.Todo
+
+	result := database.First(&todo, id)
+
+	return todo, result.Error
+}
