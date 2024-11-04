@@ -17,6 +17,6 @@ func GetTodoById(id string) (model.Todo, error) {
 	return todoRepository.GetTodoById(id)
 }
 
-func UpdateTodoById(todo *model.Todo) error {
+func UpdateTodoById(todo model.Todo) error {
 	return todoRepository.UpdateTodoById(todo)
 }

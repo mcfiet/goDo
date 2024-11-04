@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/mcfiet/goDo/todo/model"
@@ -41,7 +42,6 @@ func CreateTodo(w http.ResponseWriter, r *http.Request) {
 
 func GetTodoById(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
-	fmt.Println(id)
 
 	entry, err := service.GetTodoById(id)
 	if err != nil {
@@ -57,15 +57,19 @@ func GetTodoById(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateTodoById(w http.ResponseWriter, r *http.Request) {
-	id := chi.URLParam(r, "id")
-	fmt.Println(id)
-
-	var todo *model.Todo
-	json.NewDecoder(r.Body).Decode(&todo)
-
-	err := service.UpdateTodoById(todo)
-
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	var todo model.Todo
+	if err := json.NewDecoder(r.Body).Decode(&todo); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	todo.ID = id
+
+	if err := service.UpdateTodoById(todo); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 

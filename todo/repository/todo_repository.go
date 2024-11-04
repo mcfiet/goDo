@@ -30,7 +30,7 @@ func GetTodoById(id string) (model.Todo, error) {
 	return todo, result.Error
 }
 
-func UpdateTodoById(todo *model.Todo) error {
+func UpdateTodoById(todo model.Todo) error {
 	database := db.GetDB()
 
 	result := database.Model(&todo).Updates(todo)
