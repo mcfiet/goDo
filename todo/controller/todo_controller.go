@@ -55,3 +55,19 @@ func GetTodoById(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 }
+
+func UpdateTodoById(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	fmt.Println(id)
+
+	var todo *model.Todo
+	json.NewDecoder(r.Body).Decode(&todo)
+
+	err := service.UpdateTodoById(todo)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+}
