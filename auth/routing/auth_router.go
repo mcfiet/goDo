@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/mcfiet/goDo/handlers"
+	"github.com/mcfiet/goDo/auth/handlers"
 )
 
 func LoginRouter() http.Handler {

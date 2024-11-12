@@ -1,9 +1,9 @@
 package model
 
-import "github.com/mcfiet/goDo/model"
+import "github.com/mcfiet/goDo/utils"
 
 type User struct {
-	model.Base
+	utils.Base
 	Username string `json:"username"`
 	Password string `json:"password"`
 }

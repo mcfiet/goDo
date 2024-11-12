@@ -1,9 +1,9 @@
 package model
 
-import "github.com/mcfiet/goDo/model"
+import "github.com/mcfiet/goDo/utils"
 
 type Todo struct {
-	model.Base
+	utils.Base
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }

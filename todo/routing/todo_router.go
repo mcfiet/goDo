@@ -3,7 +3,7 @@ package router
 import (
 	"net/http"
 
-	"github.com/mcfiet/goDo/middleware"
+	"github.com/mcfiet/goDo/auth/middleware"
 	"github.com/mcfiet/goDo/todo/controller"
 
 	"github.com/go-chi/chi/v5"

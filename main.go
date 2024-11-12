@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	loginRouter "github.com/mcfiet/goDo/auth/routing"
 	"github.com/mcfiet/goDo/db"
-	loginRouter "github.com/mcfiet/goDo/login/routing"
 	todoRouter "github.com/mcfiet/goDo/todo/routing"
 )
 
