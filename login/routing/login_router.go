@@ -1,15 +1,16 @@
 package router
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/mcfiet/goDo/login/controller"
+	"github.com/mcfiet/goDo/handlers"
 )
 
 func LoginRouter() http.Handler {
 	r := chi.NewRouter()
-	r.Get("/", controller.GetLogin)
-	r.Post("/", controller.Login)
+	log.Println("Login Router")
+	r.Post("/", handlers.Login)
 	return r
 }

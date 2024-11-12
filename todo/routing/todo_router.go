@@ -3,8 +3,8 @@ package router
 import (
 	"net/http"
 
+	"github.com/mcfiet/goDo/middleware"
 	"github.com/mcfiet/goDo/todo/controller"
-	"github.com/mcfiet/goDo/todo/middleware"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -12,8 +12,7 @@ import (
 func TodoRouter() http.Handler {
 	r := chi.NewRouter()
 
-	r.Use(middleware.UseIsAuthenticated)
-
+	r.Use(middleware.AuthenticationMiddleware)
 	r.Get("/", controller.GetAllTodos)
 	r.Post("/", controller.CreateTodo)
 	r.Get("/{id}", controller.GetTodoById)

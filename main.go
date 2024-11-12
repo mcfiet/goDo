@@ -16,8 +16,9 @@ func main() {
 	todoRouter := todoRouter.TodoRouter()
 	loginRouter := loginRouter.LoginRouter()
 
-	r.Mount("/todos", todoRouter)
 	r.Mount("/login", loginRouter)
+	r.Mount("/todos", todoRouter)
 	log.Println("Server starting on :3000")
+
 	http.ListenAndServe(":3000", r)
 }
