@@ -9,7 +9,7 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-func TodoRouter() http.Handler {
+func TodoRouter(controller *controller.TodoController) http.Handler {
 	r := chi.NewRouter()
 
 	r.Use(middleware.AuthenticationMiddleware)

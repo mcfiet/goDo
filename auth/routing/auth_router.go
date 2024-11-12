@@ -8,7 +8,7 @@ import (
 	"github.com/mcfiet/goDo/auth/handlers"
 )
 
-func LoginRouter() http.Handler {
+func LoginRouter(handlers *handlers.AuthHandler) http.Handler {
 	r := chi.NewRouter()
 	log.Println("Login Router")
 	r.Post("/", handlers.Login)

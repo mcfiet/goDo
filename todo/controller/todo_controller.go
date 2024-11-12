@@ -8,17 +8,25 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 	"github.com/mcfiet/goDo/todo/model"
-	"github.com/mcfiet/goDo/todo/service"
+	todoService "github.com/mcfiet/goDo/todo/service"
 )
 
-func GetHello(w http.ResponseWriter, r *http.Request) {
+type TodoController struct {
+	service *todoService.TodoService
+}
+
+func NewTodoController(service *todoService.TodoService) *TodoController {
+	return &TodoController{service}
+}
+
+func (controller *TodoController) GetHello(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Hello World")
 	fmt.Println(r)
 	w.Write([]byte("This is my api"))
 }
 
-func GetAllTodos(w http.ResponseWriter, r *http.Request) {
-	entries, err := service.GetAllTodos()
+func (controller *TodoController) GetAllTodos(w http.ResponseWriter, r *http.Request) {
+	entries, err := controller.service.GetAllTodos()
 	if err != nil {
 		http.Error(w, "Fehler beim Holen der Daten", http.StatusInternalServerError)
 	}
@@ -30,20 +38,20 @@ func GetAllTodos(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 }
 
-func CreateTodo(w http.ResponseWriter, r *http.Request) {
+func (controller *TodoController) CreateTodo(w http.ResponseWriter, r *http.Request) {
 	var todo model.Todo
 	json.NewDecoder(r.Body).Decode(&todo)
-	err := service.CreateTodo(&todo)
+	err := controller.service.CreateTodo(&todo)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 	w.Header().Set("Content-Type", "application/json")
 }
 
-func GetTodoById(w http.ResponseWriter, r *http.Request) {
+func (controller *TodoController) GetTodoById(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 
-	entry, err := service.GetTodoById(id)
+	entry, err := controller.service.GetTodoById(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -56,7 +64,7 @@ func GetTodoById(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 }
 
-func UpdateTodoById(w http.ResponseWriter, r *http.Request) {
+func (controller *TodoController) UpdateTodoById(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 
 	parsedUUID, err := uuid.Parse(id)
@@ -69,7 +77,7 @@ func UpdateTodoById(w http.ResponseWriter, r *http.Request) {
 	}
 
 	todo.ID = parsedUUID
-	if err := service.UpdateTodoById(todo); err != nil {
+	if err := controller.service.UpdateTodoById(todo); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 

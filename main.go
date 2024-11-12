@@ -5,16 +5,16 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/mcfiet/goDo/app"
 	loginRouter "github.com/mcfiet/goDo/auth/routing"
-	"github.com/mcfiet/goDo/db"
 	todoRouter "github.com/mcfiet/goDo/todo/routing"
 )
 
 func main() {
-	db.Init()
 	r := chi.NewRouter()
-	todoRouter := todoRouter.TodoRouter()
-	loginRouter := loginRouter.LoginRouter()
+	app := app.InitApp()
+	todoRouter := todoRouter.TodoRouter(app.TodoController)
+	loginRouter := loginRouter.LoginRouter(app.AuthHandler)
 
 	r.Mount("/login", loginRouter)
 	r.Mount("/todos", todoRouter)

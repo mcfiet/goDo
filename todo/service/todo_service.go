@@ -5,18 +5,26 @@ import (
 	todoRepository "github.com/mcfiet/goDo/todo/repository"
 )
 
-func GetAllTodos() ([]model.Todo, error) {
-	return todoRepository.GetAllTodos()
+type TodoService struct {
+	repo todoRepository.TodoRepository
 }
 
-func CreateTodo(todo *model.Todo) error {
-	return todoRepository.CreateTodo(todo)
+func NewTodoService(repo todoRepository.TodoRepository) *TodoService {
+	return &TodoService{repo}
 }
 
-func GetTodoById(id string) (model.Todo, error) {
-	return todoRepository.GetTodoById(id)
+func (service *TodoService) GetAllTodos() ([]model.Todo, error) {
+	return service.repo.GetAllTodos()
 }
 
-func UpdateTodoById(todo model.Todo) error {
-	return todoRepository.UpdateTodoById(todo)
+func (service *TodoService) CreateTodo(todo *model.Todo) error {
+	return service.repo.CreateTodo(todo)
+}
+
+func (service *TodoService) GetTodoById(id string) (model.Todo, error) {
+	return service.repo.GetTodoById(id)
+}
+
+func (service *TodoService) UpdateTodoById(todo model.Todo) error {
+	return service.repo.UpdateTodoById(todo)
 }

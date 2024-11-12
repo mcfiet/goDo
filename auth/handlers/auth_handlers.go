@@ -11,7 +11,9 @@ import (
 	"github.com/mcfiet/goDo/utils"
 )
 
-func Login(w http.ResponseWriter, r *http.Request) {
+type AuthHandler struct{}
+
+func (handler *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	log.Println("Login")
 	log.Println("Header:", r.Header.Get("Authorization"))
 	var user model.User
