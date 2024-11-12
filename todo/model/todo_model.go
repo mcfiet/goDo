@@ -1,7 +1,9 @@
 package model
 
+import "github.com/mcfiet/goDo/model"
+
 type Todo struct {
-	ID          int    `json:"id" gorm:"unique;primaryKey;autoIncrement"`
+	model.Base
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }

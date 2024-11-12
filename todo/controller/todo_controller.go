@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/google/uuid"
 	"github.com/mcfiet/goDo/todo/model"
 	"github.com/mcfiet/goDo/todo/service"
 )
@@ -57,18 +57,18 @@ func GetTodoById(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateTodoById(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	id := chi.URLParam(r, "id")
+
+	parsedUUID, err := uuid.Parse(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
-
 	var todo model.Todo
 	if err := json.NewDecoder(r.Body).Decode(&todo); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	todo.ID = id
-
+	todo.ID = parsedUUID
 	if err := service.UpdateTodoById(todo); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
