@@ -27,6 +27,9 @@ func (service *UserService) FindAll() ([]model.User, error) {
 }
 
 func (service *UserService) Save(user model.User) error {
+	if user.Username == "" || user.Email == "" || user.Password == "" {
+		return errors.New("Username, Email and Password are required")
+	}
 	return service.UserRepository.Save(user)
 }
 
