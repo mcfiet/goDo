@@ -1,6 +1,8 @@
 package service
 
 import (
+	"errors"
+
 	"github.com/google/uuid"
 	"github.com/mcfiet/goDo/user/model"
 	"github.com/mcfiet/goDo/user/repository"
