@@ -3,7 +3,8 @@ package db
 import (
 	"log"
 
-	"github.com/mcfiet/goDo/todo/model"
+	todoModel "github.com/mcfiet/goDo/todo/model"
+	userModel "github.com/mcfiet/goDo/user/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -17,7 +18,8 @@ func Init() *gorm.DB {
 		log.Fatal(err)
 	}
 
-	db.AutoMigrate(&model.Todo{})
+	db.AutoMigrate(&todoModel.Todo{})
+	db.AutoMigrate(&userModel.User{})
 
 	return db
 }

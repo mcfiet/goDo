@@ -1,6 +1,7 @@
 package service
 
 import (
+	"github.com/google/uuid"
 	"github.com/mcfiet/goDo/todo/model"
 	todoRepository "github.com/mcfiet/goDo/todo/repository"
 )
@@ -21,7 +22,7 @@ func (service *TodoService) CreateTodo(todo *model.Todo) error {
 	return service.repo.CreateTodo(todo)
 }
 
-func (service *TodoService) GetTodoById(id string) (model.Todo, error) {
+func (service *TodoService) GetTodoById(id uuid.UUID) (model.Todo, error) {
 	return service.repo.GetTodoById(id)
 }
 

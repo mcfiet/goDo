@@ -9,7 +9,7 @@ import (
 type TodoRepository interface {
 	GetAllTodos() ([]model.Todo, error)
 	CreateTodo(todo *model.Todo) error
-	GetTodoById(id string) (model.Todo, error)
+	GetTodoById(id uuid.UUID) (model.Todo, error)
 	UpdateTodoById(todo model.Todo) error
 }
 
@@ -35,7 +35,7 @@ func (repo *todoRepository) CreateTodo(todo *model.Todo) error {
 	return result.Error
 }
 
-func (repo *todoRepository) GetTodoById(id string) (model.Todo, error) {
+func (repo *todoRepository) GetTodoById(id uuid.UUID) (model.Todo, error) {
 	var todo model.Todo
 
 	result := repo.db.First(&todo, id)

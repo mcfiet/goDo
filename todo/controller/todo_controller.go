@@ -49,7 +49,10 @@ func (controller *TodoController) CreateTodo(w http.ResponseWriter, r *http.Requ
 }
 
 func (controller *TodoController) GetTodoById(w http.ResponseWriter, r *http.Request) {
-	id := chi.URLParam(r, "id")
+	id, err := uuid.Parse(chi.URLParam(r, "id"))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
 
 	entry, err := controller.service.GetTodoById(id)
 	if err != nil {

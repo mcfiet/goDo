@@ -6,25 +6,36 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/google/uuid"
-	"github.com/mcfiet/goDo/user/model"
+	authModel "github.com/mcfiet/goDo/auth/model"
+	"github.com/mcfiet/goDo/user/service"
 	"github.com/mcfiet/goDo/utils"
 )
 
-type AuthHandler struct{}
+type AuthHandler struct {
+	UserService *service.UserService
+}
+
+func NewAuthHandler(service *service.UserService) *AuthHandler {
+	return &AuthHandler{service}
+}
 
 func (handler *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
-	log.Println("Login")
-	log.Println("Header:", r.Header.Get("Authorization"))
-	var user model.User
-	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
+	var authInput authModel.AuthInput
+
+	if err := json.NewDecoder(r.Body).Decode(&authInput); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	log.Println(user)
-	user.ID = uuid.New()
+	log.Println(authInput.Username)
 
-	if user.Username == "fiete" && user.Password == "test" {
+	user, err := handler.UserService.FindByUsername(authInput.Username)
+	if err != nil {
+		http.Error(w, "User not found", http.StatusNotFound)
+	}
+
+	log.Println(user)
+
+	if user.Password == authInput.Password {
 		fmt.Println("Logged In")
 		token, err := utils.GenerateToken(user.ID)
 		if err != nil {
@@ -33,6 +44,7 @@ func (handler *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 
 		w.Header().Set("Authorization", "Bearer "+token)
 	} else {
+		fmt.Println("Wrong Credentials")
 		http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
 	}
 }
