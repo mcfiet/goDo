@@ -1,6 +1,8 @@
 package service
 
 import (
+	"errors"
+
 	"github.com/google/uuid"
 	"github.com/mcfiet/goDo/user/model"
 	"github.com/mcfiet/goDo/user/repository"
@@ -27,6 +29,9 @@ func (service *UserService) FindAll() ([]model.User, error) {
 }
 
 func (service *UserService) Save(user model.User) error {
+	if user.Username == "" || user.Password == "" {
+		return errors.New("Username and Password are required")
+	}
 	return service.UserRepository.Save(user)
 }
 
