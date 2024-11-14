@@ -3,7 +3,6 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 
 	authModel "github.com/mcfiet/goDo/auth/model"
@@ -26,16 +25,12 @@ func (handler *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	log.Println(authInput.Username)
-
 	user, err := handler.UserService.FindByUsername(authInput.Username)
 	if err != nil {
 		http.Error(w, "User not found", http.StatusNotFound)
 	}
 
-	log.Println(user)
-
-	if user.Password == authInput.Password {
+	if utils.VerifyPassword(authInput.Password, user.Password) {
 		fmt.Println("Logged In")
 		token, err := utils.GenerateToken(user.ID)
 		if err != nil {
