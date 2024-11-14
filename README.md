@@ -8,8 +8,9 @@ goDo is a simple REST API for managing todo tasks with authentication, built usi
 
 ## Features
 
-- User authentication
+- User authentication (login and register)
 - CRUD operations for todo tasks
+- User management with the ability to view and update user information
 - Structured using Go and the chi router
 - PostgreSQL database integration via GORM
 
@@ -44,6 +45,7 @@ The server will start on `http://localhost:3000`.
 
 ### Authentication
 - `POST /login` - Authenticate a user
+- `POST /register` - Register a new user
 
 ### Todos
 - `GET /todos` - Retrieve all todos
@@ -51,3 +53,9 @@ The server will start on `http://localhost:3000`.
 - `GET /todos/{id}` - Retrieve a specific todo
 - `PUT /todos/{id}` - Update a specific todo
 - `DELETE /todos/{id}` - Delete a specific todo
+
+### Users
+- `GET /users/{id}` - Retrieve a specific user by ID
+- `GET /users` - Retrieve all users
+- `POST /users` - Create a new user
+- `PUT /users` - Update user information
