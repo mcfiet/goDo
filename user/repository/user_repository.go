@@ -9,6 +9,8 @@ import (
 type UserRepository interface {
 	FindById(id uuid.UUID) (model.User, error)
 	FindByUsername(username string) (model.User, error)
+	FindByEmail(email string) (model.User, error)
+	FindByUsernameOrEmail(username string, email string) (model.User, error)
 	FindAll() ([]model.User, error)
 	Save(user model.User) error
 	Update(user model.User) error
@@ -31,6 +33,20 @@ func (repo *userRepository) FindById(id uuid.UUID) (model.User, error) {
 func (repo *userRepository) FindByUsername(username string) (model.User, error) {
 	var user model.User
 	result := repo.db.Where("username = ?", username).First(&user)
+	return user, result.Error
+}
+
+func (repo *userRepository) FindByEmail(email string) (model.User, error) {
+	var user model.User
+	result := repo.db.Where("email = ?", email).First(&user)
+
+	return user, result.Error
+}
+
+func (repo *userRepository) FindByUsernameOrEmail(username string, email string) (model.User, error) {
+	var user model.User
+	result := repo.db.Where("username = ? OR email = ?", username, email).First(&user)
+
 	return user, result.Error
 }
 
