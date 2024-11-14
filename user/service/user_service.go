@@ -38,3 +38,12 @@ func (service *UserService) Save(user model.User) error {
 func (service *UserService) Update(user model.User) error {
 	return service.UserRepository.Update(user)
 }
+
+func (service *UserService) CheckIfUserExists(user model.User) error {
+	_, err := service.UserRepository.FindByUsernameOrEmail(user.Username, user.Email)
+	if err == nil {
+		return errors.New("User with username or email already exists")
+	}
+
+	return nil
+}

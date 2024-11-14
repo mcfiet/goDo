@@ -62,6 +62,10 @@ func (controller *UserController) FindAll(w http.ResponseWriter, r *http.Request
 func (controller *UserController) Save(w http.ResponseWriter, r *http.Request) {
 	var user model.User
 	json.NewDecoder(r.Body).Decode(&user)
+	if err := controller.UserService.CheckIfUserExists(user); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 	err := controller.UserService.Save(user)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
