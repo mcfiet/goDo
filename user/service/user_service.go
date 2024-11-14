@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/mcfiet/goDo/user/model"
 	"github.com/mcfiet/goDo/user/repository"
+	"github.com/mcfiet/goDo/utils"
 )
 
 type UserService struct {
@@ -32,6 +33,13 @@ func (service *UserService) Save(user model.User) error {
 	if user.Username == "" || user.Email == "" || user.Password == "" {
 		return errors.New("Username, Email and Password are required")
 	}
+	hashedPassword, err := utils.HashPassword(user.Password)
+	if err != nil {
+		return err
+	}
+
+	user.Password = hashedPassword
+
 	return service.UserRepository.Save(user)
 }
 
